@@ -17,7 +17,7 @@ export default async (req, res) => {
 
         const collection = database.collection("inventory");
         
-        const product = await collection.findOne({ _id: new ObjectId(id) });
+        const product = await collection.findOne({ _id: new ObjectId(id)  });
 
         //console.log('product',product)
         
