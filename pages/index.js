@@ -1,22 +1,38 @@
-import Head from 'next/head'
+import Router from 'next/router'
 import Link from 'next/link'
-import styles from '../styles/Home.module.css'
+import Head from 'next/head'
 
-export default function Home() {
-  return (
-    <>
-      <Head>
-        <title>Ninja List | Home</title>
-        <meta name="keywords" content="ninjas"/>
-      </Head>
-      <div>
-        <h1 className={styles.title}>Homepage</h1>
-        <p className={styles.text}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus animi impedit suscipit architecto, odio inventore nostrum non neque dicta. Quam magni accusantium culpa distinctio tempore iure accusamus, dolorem nobis odit.</p>
-        <p className={styles.text}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus animi impedit suscipit architecto, odio inventore nostrum non neque dicta. Quam magni accusantium culpa distinctio tempore iure accusamus, dolorem nobis odit.</p>
-        <Link href="/ninjas/">
-          <a className={styles.btn}>See Ninja Listing</a>
-        </Link>
-      </div>
-    </>
-  )
+function Homepage(props){
+    console.log('reac')
+    return ( 
+        <>
+            <Head>
+                <title>Welcome to Next.js!</title>
+            </Head>
+            <div>Welcome to next js!</div>
+            <Link href="/posts/first" legacyBehavior>
+                <a>First post</a>
+            </Link>
+
+            <br />
+
+            <span onClick={() => Router.push('/posts/one')}>First Post</span>
+
+            <span onClick={() => Router.push('/?counter=1', undefined, { shallow: true })}>Reload</span>
+
+            <div>Next stars: {props.stars}</div>
+
+            <img src='/mobile.png' width={50} />
+        </>
+    )
 }
+
+export async function getServerSideProps(context){
+    const res = await fetch('https://api.github.com/repos/vercel/next.js');
+    const json = await res.json();
+    return{
+        props:{stars: json.stargazers_count?json.stargazers_count:10}
+    }
+}
+
+export default Homepage;
