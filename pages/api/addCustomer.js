@@ -17,7 +17,7 @@ export default async function (req, res) {
             // Choose a name for your collection
             const collection = database.collection("customers");
 
-            const customer = {
+            const customerData = {
                 email: req.body.email,
                 fname: req.body.fname,
                 lname: req.body.lname,
