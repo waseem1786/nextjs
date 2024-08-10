@@ -16,7 +16,7 @@ export default async function (req, res) {
 
             // Choose a name for your collection
             const collection = database.collection("customers");
-            const allData = await collection.find({}).toArray();
+            const allData = await collection.find({},{ projection: { hashedAndSaltedPassword: 0 } }).toArray();
 
             res.status(200).json(allData);
         } catch (error) {
