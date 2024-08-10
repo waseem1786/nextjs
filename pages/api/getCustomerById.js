@@ -17,7 +17,7 @@ export default async (req, res) => {
 
         const collection = database.collection("customers");
         
-        const customer = await collection.findOne({ _id: new ObjectId(id) });
+        const customer = await collection.findOne({ _id: new ObjectId(id) },{ projection: { hashedAndSaltedPassword: 0 }} );
 
         console.log('customer',customer)
         
