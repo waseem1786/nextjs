@@ -12,10 +12,10 @@ export default async function (req, res) {
             console.log('connected')
 
             // Choose a name for your database
-            const database = client.db("sample_mflix");
+            const database = client.db("e_store");
 
             // Choose a name for your collection
-            const collection = database.collection("sessions");
+            const collection = database.collection("customers");
             const allData = await collection.find({}).toArray();
 
             res.status(200).json(allData);
