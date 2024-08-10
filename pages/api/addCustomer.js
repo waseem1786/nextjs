@@ -33,10 +33,22 @@ export default async function (req, res) {
                 },
             };
 
-            // Insert the new customer
-            await collection.insertOne(customer);
+            // Define filter for finding the customer by email
+            const filter = { email: customerData.email };
 
-            res.status(200).json({ message: 'Customer added successfully' });
+            // Upsert the customer (update if exists, insert if not)
+            const result = await collection.updateOne(filter, { $set: customerData }, { upsert: true });
+
+            if (result.upsertedCount > 0) {
+                res.status(201).json({
+                    message: "Customer added successfully",
+                    customerId: result.upsertedId._id
+                });
+            } else {
+                res.status(200).json({
+                    message: "Customer updated successfully"
+                });
+            }
         } catch (error) {
             console.error(error);
             res.status(500).json({ message: 'Internal Server Error' });
